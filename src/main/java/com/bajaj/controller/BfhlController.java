@@ -11,7 +11,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/bfhl")
 public class BfhlController {
 
     private final BfhlService bfhlService;
@@ -20,7 +19,14 @@ public class BfhlController {
         this.bfhlService = bfhlService;
     }
 
-    @PostMapping
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> health() {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("status", "OK");
+        return ResponseEntity.ok(body);
+    }
+
+    @PostMapping("/bfhl")
     public ResponseEntity<Map<String, Object>> handlePost(@Valid @RequestBody BfhlRequest request) {
         BfhlResponse r = bfhlService.process(request);
 
